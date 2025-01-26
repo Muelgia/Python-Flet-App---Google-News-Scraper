@@ -31,7 +31,7 @@ def obter_data_ntp(data_limite):
         return f"Erro: {e}"
 
 # Chamando a função
-data_atual = obter_data_ntp("2024-02-01")
+data_atual = obter_data_ntp("2025-02-01")
 print(data_atual)
 
 def startarApp(page, navegadorEscondido, tema, inputPesquisa, botaoRelatorio, botoesFiltro, botaoPlay):
@@ -89,11 +89,12 @@ def startarApp(page, navegadorEscondido, tema, inputPesquisa, botaoRelatorio, bo
                     print('ERRO')
                     continue
 
-            mostrar_notificacao(page=page, texto='Busca de notícias finalizada, salve antes de proseguir!', icon=ft.icons.CHECK_CIRCLE_SHARP, cor='green', titulo='FINALIZADO')
-            botaoRelatorio.disabled = False
-            botaoRelatorio.update()
             if not dicionarioNoticias:
                 mostrar_notificacao(page=page, texto='Nenhuma notícia encontrada!', icon=ft.icons.WARNING, cor='red', titulo='Atenção')
+            else:
+                botaoRelatorio.disabled = False
+                botaoRelatorio.update()
+                mostrar_notificacao(page=page, texto='Busca de notícias finalizada, salve antes de proseguir!', icon=ft.icons.CHECK_CIRCLE_SHARP, cor='green', titulo='FINALIZADO')
             return dicionarioNoticias
 
         finally:
