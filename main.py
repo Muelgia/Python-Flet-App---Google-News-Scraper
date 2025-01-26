@@ -1,10 +1,10 @@
 import flet as ft
 from views.home import home
-from views.sfaPage import sfa
+from views.pagePrincipal import pagePrincipal
 
 def main(page: ft.Page):
     
-    version = '1.0'
+    version = '- BETA - 1.0.0'
     page.window.max_width = 850
     page.window.max_height = 515
 
@@ -19,7 +19,7 @@ def main(page: ft.Page):
     page.window.on_maximize = lambda e: page.window.restore()  # Restores window if maximized
 
     # Declara o tema da página
-    #page.theme_mode = "Dark"
+    # page.theme_mode = "Dark"
     page.theme_mode = "Light"
 
     # Define o título inicial da página
@@ -45,7 +45,7 @@ def main(page: ft.Page):
                     control.width = current_width
                     control.height = current_height
             page.update()  # Atualiza a visualização com a nova dimensãoh
-        elif page.route == '/sfa':
+        elif page.route == '/pagePrincipal':
             for control in page.views[0].controls:
                 if isinstance(control, ft.ResponsiveRow):
                     control.width = current_width
@@ -59,10 +59,10 @@ def main(page: ft.Page):
         # Adiciona a view correta com base na rota
         if route == '/':
             page.views.append(home(page, width, height))  # Home
-            page.title = f"AVISO - BOT SFA {version}"  # Título da página Home
+            page.title = f"AVISO {version}"  # Título da página Home
         elif route == '/sfa':
-            page.views.append(sfa(page, width, height))  # Outra rota
-            page.title = f"BOT SFA {version}"  # Título da página BOT SFA
+            page.views.append(pagePrincipal(page, width, height))  # Outra rota
+            page.title = f"Buscador de Noticias {version}"  # Título da página BOT SFA
         else:
             # Página padrão para rotas não encontradas
             page.views.append(

@@ -2,49 +2,17 @@ import os
 import pandas as pd
 from datetime import date
 
-class ExcelFunc():
-    def __init__(self):
-        self.self = self
-    
-    def subirExcel(self, planilha):
-        
-        if planilha[-4:] == 'xlsx':
-            try:
-                planilhaXlsx = pd.read_excel(planilha)
-                print(planilhaXlsx)
-            except Exception as e:
-                print(e)
-                return "Erro ao ler a planilha em formato xlsx"
-        
-        else:
-            return "Formato de arquivo inválido!"
+def salvarPlanilha(dir, dados):
 
-        return planilhaXlsx
+    if dir[-3:].lower() != 'csv':
+        dir = dir + '.csv'
 
-def criarPlanilha(dir):
-
-    dir = dir+'\\Template.xlsx'
-
-    dataFrameExcel = {'CNPJ': [], 'Adabas': []}
-    dataFrame = pd.DataFrame(dataFrameExcel)
-    dataFrame.to_excel(dir, index=False)
-
-    print(f'Planilha template criada em {dir}')
-    return f'Planilha template criada em {dir}'
-
-
-def salvarPlanilha(dir):
-
-
-
-    dir = dir+f'\\Relatório SFA {date.today()}.xlsx'
-
-    csv_file = 'controllers/cacheDF.txt'
-    df = pd.read_csv(csv_file, sep=';', quotechar='"')
-    df.to_excel(dir, index=False, engine='openpyxl')
-
-    print(f'Relatório salvo em {dir}')
-    return f'Relatório salvo em {dir}'
+    try:
+        df = pd.DataFrame(dados)
+        df.to_csv(dir, index=False, encoding='utf-8-sig', sep=';')
+        print("Arquivo salvo com sucesso!")
+    except Exception as e:
+        print(f"Erro ao salvar o arquivo: {e}")
 
 if __name__ == '__main__':
     
