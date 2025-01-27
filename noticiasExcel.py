@@ -46,7 +46,7 @@ def startarApp(page, navegadorEscondido, tema, inputPesquisa, botaoRelatorio, bo
             botaoPlay.update()
 
             if botoesFiltro['24 horas']:
-                filtroData = 'tbs=qdr:d'
+                filtroData = '&tbs=qdr:d'
             elif botoesFiltro['1 semana']:
                 filtroData = '&tbs=qdr:w'
             elif botoesFiltro['Todas']:
