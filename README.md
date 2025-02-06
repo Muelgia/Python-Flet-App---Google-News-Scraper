@@ -18,6 +18,8 @@ Este é um aplicativo desenvolvido com **Flet** que permite buscar notícias do 
 ## 📥 Instalação
 Certifique-se de ter o Python instalado. Em seguida, clone o repositório e instale as dependências presentes no requirements.txt e certifique-se de ter o Google Chrome instalado.
 
+EXECUTE O APP ATRAVÉS DO MAIN.PY
+
 ---
 
 Feito com ❤️ por Samuel Garcia
