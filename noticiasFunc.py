@@ -1,4 +1,4 @@
-import requests, re
+import requests
 import bs4
 from time import sleep
 from selenium import webdriver

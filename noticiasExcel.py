@@ -3,7 +3,6 @@ from resumeText import resumirTexto
 from datetime import datetime
 from funcoesFlet import mostrar_notificacao
 import flet as ft
-
 import ntplib
 from datetime import datetime, timezone
 
