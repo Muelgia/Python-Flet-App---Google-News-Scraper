@@ -17,6 +17,6 @@ def salvarPlanilha(dir, dados):
 if __name__ == '__main__':
     
     user = os.environ.get("USERNAME")
-    #criarPlanilha(f'c:\\Users\\{user}\\Downloads')
+  
 
 

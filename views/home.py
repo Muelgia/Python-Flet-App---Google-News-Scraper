@@ -8,6 +8,7 @@ def home(page: ft.Page, width: int, height: int):
     #elementos de rolagem da pagina de aviso
     rolagem.controls.append(ft.Column(
                             controls=[
+                                # titulo
                                 ft.Text(
                                     value='Bem vindo'.upper(),
                                     size=20,
@@ -19,7 +20,7 @@ def home(page: ft.Page, width: int, height: int):
                                     height=1,
                                     thickness=2
                                 ),
-
+                                # texto vindo das strings.py
                                 ft.Text(
                                     value=stringsHome['Bem vindo'],
                                     size=15,
@@ -27,7 +28,7 @@ def home(page: ft.Page, width: int, height: int):
                                     color=ft.colors.with_opacity(0.5, 'black'),
                                     text_align='center'
                                 ),
-
+                                # botao de icone que quando clicado leva para proxima pagina
                                 ft.IconButton(
                                     icon=ft.icons.LOGIN,
                                     icon_size=30,
@@ -36,6 +37,7 @@ def home(page: ft.Page, width: int, height: int):
                                     on_click= lambda e: page.go('/sfa')
                                 )
                             ],
+                            # alinhamento da pagina no centro
                             horizontal_alignment=ft.CrossAxisAlignment.CENTER
                         ))
 

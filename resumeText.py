@@ -3,18 +3,21 @@ from sumy.parsers.plaintext import PlaintextParser
 from sumy.summarizers.lsa import LsaSummarizer
 from nltk.tokenize import sent_tokenize, word_tokenize
 
-# Definir um Tokenizer Customizado
+# definir um Tokenizer Customizado
 class CustomTokenizer:
+    # sent_tokenize do nltk
     def to_sentences(self, text):
-        return sent_tokenize(text)  # Usando sent_tokenize do nltk
+        return sent_tokenize(text)  
 
+    # word_tokenize do nltk
     def to_words(self, text):
-        return word_tokenize(text)  # Usando word_tokenize do nltk
+        return word_tokenize(text) 
 
-# Baixar o pacote necessário
+# baixa os pacote necessário
 nltk.download('punkt')
-nltk.download('punkt_tab')  # Garantir que o punkt_tab também seja baixado
+nltk.download('punkt_tab') 
 
+# todas as tags possiveis de serem encontradas no html
 html_text_tags = ("<p>", "</p>", "<h1>", "</h1>", "<h2>", "</h2>", "<h3>", "</h3>", "<h4>", "</h4>", "<h5>", "</h5>", "<h6>", "</h6>", 
     "<b>", "</b>", "<i>", "</i>", "<u>", "</u>", "<strong>", "</strong>", "<em>", "</em>", "<mark>", "</mark>",
     "<blockquote>", "</blockquote>", "<q>", "</q>", "<code>", "</code>",  
@@ -25,30 +28,38 @@ html_text_tags = ("<p>", "</p>", "<h1>", "</h1>", "<h2>", "</h2>", "<h3>", "</h3
     "<small>", "</small>", "<kbd>", "</kbd>", "<samp>", "</samp>",                  
     "<address>", "</address>", "<bdi>", "</bdi>", "<bdo>", "</bdo>", "\n", "'", '"', ";", '“')
 
+# funcao de resumir text
 def resumirTexto(texto):
     
 
-    # Usar o Tokenizer customizado
+    # usar o Tokenizer customizado
     tokenizer = CustomTokenizer()
 
-    # Parser e summarizer
+    # parser e summarizer
     parser = PlaintextParser.from_string(texto, tokenizer)
     summarizer = LsaSummarizer()
     summary = summarizer(parser.document, 8) 
 
+    # texto final vazio
     textoFinal = ""
-    # Imprimir o resumo
+    # imprimir o resumo atravez do for
     for sentence in summary:
+        #adiciona cada frase do texto a mesma variavel de texto
         textoFinal += str(sentence)
 
-
+    # remove todos as tags html do texto
     for caractere in html_text_tags:
         textoFinal = textoFinal.replace(caractere, '')
 
+    # print para acompanhar e return
     print(textoFinal)
     return textoFinal
 
+
+# chama a funcao para teste
 if __name__ == '__main__':
+
+    # testo html teste
     texto = """  <h1>Cientistas Descobrem Vida em Marte!</h1>
 
         <p><strong>Marte, 23 de janeiro de 2025</strong> - Uma equipe de cientistas internacionais fez uma descoberta revolucionária: foi encontrada vida em Marte! Após anos de pesquisa e exploração, sinais de organismos microscópicos foram detectados em amostras coletadas por sondas espaciais.</p>
@@ -65,4 +76,6 @@ if __name__ == '__main__':
         
         <p>Fique atento às próximas atualizações sobre essa incrível descoberta. Em breve, mais detalhes serão divulgados em um estudo científico completo, que promete mudar a forma como vemos o cosmos.</p>
     """
+
+    # manda o texto para funcao
     resumirTexto(texto)

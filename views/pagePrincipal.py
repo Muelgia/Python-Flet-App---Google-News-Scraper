@@ -20,7 +20,7 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
     #barra de rolagem
     rolagem = ft.ListView(expand=1, spacing=5, padding=5, auto_scroll=False,)
 
-# ----------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------input noticias-------------------------------------------------------------
 
     tituloTemplate = ft.Text("Buscar", text_align="center", size="20", weight=ft.FontWeight.BOLD)
  
@@ -35,7 +35,7 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
     )
 
     ContainerTemplate = ft.Container(
-                #cadastro emails
+                # input noticias
                 content=ft.Column(
                     [   
                         TemplateColumn,
@@ -54,19 +54,20 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
                 #borda arredondada 
                 border_radius=ft.border_radius.all(borderContainers),
             )
-# ----------------------------------------------------------------------------------------------------------------
- 
+# ----------------------------------------botao play-----------------------------------------------
+    # funcao do botao de play principal que chama a funcao principal do app
     def clicarBotaoPlay(e):
         nonlocal valor_retorno
         valor_retorno = startarApp(botaoRelatorio=relatorioBotao, page=page, navegadorEscondido=esconderNavegador.value,
                                    tema=inputPesquisa.value, inputPesquisa=inputPesquisa, botoesFiltro=botoes_estado, botaoPlay=botaoPlay)
 
-    # Botão com a função on_click
+    # botão com a função on_click
     botaoPlay = ft.ElevatedButton(
         text="Play",
         on_click=clicarBotaoPlay
     )
     
+    # titulo do botao play
     tituloPlayGrid = ft.Row(
         alignment=ft.MainAxisAlignment.CENTER,
         controls=[ 
@@ -100,23 +101,23 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
 
     def salvarRelatorio(e: ft.FilePickerResultEvent):
         nonlocal valor_retorno
-        print('TO AQUI POHA')
-        if e.path:  # No modo de salvar, e.path contém o caminho escolhido
-            caminho_arquivo = e.path  # Obtém o caminho correto do arquivo salvo
-            nome_arquivo = caminho_arquivo.split("\\")[-1]  # Obtém o nome do arquivo a partir do caminho
+        if e.path:  # no modo de salvar, e.path contém o caminho escolhido
+            caminho_arquivo = e.path  # obtém o caminho correto do arquivo salvo
+            nome_arquivo = caminho_arquivo.split("\\")[-1]  # obtém o nome do arquivo a partir do caminho
             
             mensagem = f'{nome_arquivo} salvo com sucesso'
             salvarPlanilha(dir=caminho_arquivo, dados=valor_retorno)
             
-            # Exibe uma mensagem ao usuário
+            # exibe uma mensagem ao usuário
             page.snack_bar = ft.SnackBar(
                 content=ft.Text(mensagem),
-                bgcolor="lightgray",  # Cor de fundo cinza claro
-                open=True  # Exibe o SnackBar com a mensagem
+                bgcolor="lightgray",  # cor de fundo cinza claro
+                open=True  # exibe o SnackBar com a mensagem
             )
+            # atualiza a pagina
             page.update()
         else:
-            print('entrei no else')
+            pass
 
 
 
@@ -174,7 +175,7 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
             )
     
 # --------------------------------------Botoes filtro data------------------------------------------------------
-
+    # titulo do campo dos botoes
     tituloPeriodo = ft.Row(
         alignment=ft.MainAxisAlignment.CENTER,
         controls=[ 
@@ -182,7 +183,7 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
         ]
     )
 
-
+    # botoes 
     botoes_estado = {
         "24 horas": True,   # Desabilitado (padrão)
         "1 semana": False,  # Ativado
@@ -191,14 +192,14 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
 
     def atualizar_botoes(botao_clicado):
         for key in botoes_estado:
-            botoes_estado[key] = key == botao_clicado  # Desativa o botão clicado e ativa os outros
+            botoes_estado[key] = key == botao_clicado  # desativa o botão clicado e ativa os outros
         
         # Atualiza a interface com os novos estados
         rowBotoesData.controls = [
             ft.ElevatedButton(
                 text=key,
                 disabled=botoes_estado[key],
-                expand=True,  # Distribui igualmente o espaço entre os botões
+                expand=True,  # distribui igualmente o espaço entre os botões
                 on_click=lambda e, k=key: atualizar_botoes(k),
             )
             for key in botoes_estado
@@ -211,7 +212,7 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
             ft.ElevatedButton(
                 text=key,
                 disabled=botoes_estado[key],
-                expand=True,  # Distribui igualmente o espaço entre os botões
+                expand=True,  # distribui igualmente o espaço entre os botões
                 on_click=lambda e, k=key: atualizar_botoes(k),
             )
             for key in botoes_estado
@@ -219,7 +220,7 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
     )
 
     ContainerPeriodo = ft.Container(
-                #cadastro emails
+                #filtro data
                 content=ft.Column(
                     [   
                         tituloPeriodo, rowBotoesData
@@ -240,16 +241,19 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
             )
 # -------------------------------------------Esconder o navegador-----------------------------------------------------
 
+    # quando o botao é ativado ou desativado muda o texto
     def mudar_estado(e):
         esconderNavegador.label = "Ativado" if esconderNavegador.value else "Desativado"
         page.update()
 
+    # botao de switch
     esconderNavegador = ft.Switch(
         value=True,  # O switch vem ativado por padrão
         label="Ativado",
         on_change=mudar_estado
     )
 
+    # titulo do campo de enconder o navegador
     tituloEsconder = ft.Row(
         alignment=ft.MainAxisAlignment.CENTER,
         controls=[ 
@@ -263,7 +267,7 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
     )
 
     ContainerEsconder = ft.Container(
-                #cadastro emails
+                # esconder navegador
                 content=ft.Column(
                     [   
                         tituloEsconder, switchCentralizado
@@ -283,29 +287,30 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
                 border_radius=ft.border_radius.all(borderContainers),
             )
 
-#------------------------------------------------------------------------------------------------------------------
-
+#------------------------------------------Ativacao----------------------------------------------------
+    # titulo do container de app ativado
     tituloAtivacao = ft.Row(
         alignment=ft.MainAxisAlignment.CENTER,
         controls=[ 
             ft.Text("Status Ativação", text_align="center", size="20", weight=ft.FontWeight.BOLD),
         ]
     )
-
+    
+    # texto da data de ativação
     validoAte = ft.Text(
-        "Demo - Validá até 31/01/2025",
+        "App ativado",
         size=15
     )
 
+    # direitos reservados para mim com ano sempre atualizado
     ano_atual = datetime.now().year
     direitos_reservados = ft.Text(
         f"© {ano_atual} Desenvolvido por Samuel Garcia. Todos os direitos reservados.",
         size=10
     )
 
-
+    # container principal da ativacao
     ContainerDireitos = ft.Container(
-                #cadastro emails
                 content=ft.Column(
                     [   
                         tituloAtivacao, validoAte, direitos_reservados
@@ -332,7 +337,7 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
         [   
             #container como parametro do responsive row
             ft.Container(
-                #cadastro emails
+                #play
                 content=ft.Column(
                     [  
                         ContainerTemplate, ContainerPlay,ContainerRelatorio
@@ -340,20 +345,20 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     spacing=10,
                 ),
-                #padding do container
+                # padding do container
                 padding=10,
-                #cor do container
+                # cor do container
                 bgcolor=corContainer,
-                #altura da pagina total
+                # altura da pagina total
                 height=445, 
-                #tamanho em colunas MAX12 de acordo com os tamanhos de dispositivos
+                # tamanho em colunas MAX12 de acordo com os tamanhos de dispositivos
                 col={'sm':12, 'md':6, 'xl':6},  
-                #borda arredondada 
+                # borda arredondada 
                 border_radius=ft.border_radius.all(borderContainers) 
             ),
 
+            #ativação
             ft.Container(
-                #cadastro emails
                 content=ft.Column(
                     [   
                         ContainerPeriodo, ContainerEsconder, ContainerDireitos
@@ -376,6 +381,7 @@ def pagePrincipal(page: ft.Page, width: int, height: int):
             
         ],
     ))
+
 
     view = ft.View(
         route='/disparador',
